@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+# Register models here.
+from HandsOffApp.models import Owner, Category, Item
+
+admin.site.register(Owner)
+admin.site.register(Category)
+admin.site.register(Item)
