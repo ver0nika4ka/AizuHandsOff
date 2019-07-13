@@ -16,6 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from HandsOffApp import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('main', views.main),
+    path('', views.main),
+    path('register', views.register),               # show reg form
+    path('do_register', views.do_register),         # send reg information
+    path('do_login', views.do_login),
+    path('do_logout', views.do_logout),
+    path('add_new_item', views.add_new_item),
+    path('do_add_new_item', views.do_add_new_item),
+    path('remove_item', views.remove_item),
+    path('do_remove_item', views.do_remove_item),
+    path('added_items', views.added_items),
+    ]
