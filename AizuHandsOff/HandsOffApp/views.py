@@ -1,30 +1,45 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password, check_password
 
 import datetime
 from HandsOffApp.models import Owner, Category, Item
+from forms import RegisterForm
 
 
 # Create your views here.
 def main(request):
-    response = "<h1>Welcome to Aizu HandsOff website!</h1>"
-
     all_items = Item.objects.all()
-
-    response += "<h2>All items:</h2>"
-
-    for item in all_items:
-        response += "{}<br>".format(item)
-
-    return HttpResponse(response)
+    message = 'All available items:'
+    dictionary = {'items_list': all_items, 'sub_header': message}
+    return render(request, 'items_list.html', dictionary)
 
 
 def register(request):
-    return HttpResponse('register')
+    return render(request, 'register.html', {'register_form': RegisterForm()})
 
 
 def do_register(request):
-    return HttpResponse('do_register')
+    form = RegisterForm(request.POST)
+    try:
+        if not form.is_valid():
+            raise RuntimeError("Error: " + str(form.errors))
+        # If form is valid, clean values are stored in cleaned_data field
+        values = form.cleaned_data
+        # Check the owner email in database if exist - error
+        if len(Owner.objects.filter(email=values['email'])) > 0:
+            raise RuntimeError("A user with the login {} already exists".format(values['email']))
+        if values['password'] != values['passagain']:
+            raise RuntimeError("Passwords do not match")
+
+        Owner.objects.create(name=values['name'], email=values['email'],
+                             password=make_password(values['password']),
+                             contact_info=values['contact_info'])
+
+    except RuntimeError as e:
+        return HttpResponse(str(e) + "<p><a href=register>Go back</a></p>")
+    return redirect('view-main')
+
 
 
 def do_login(request):

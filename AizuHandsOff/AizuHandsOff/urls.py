@@ -20,7 +20,7 @@ from HandsOffApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main', views.main),
+    path('main', views.main, name='view-main'),
     path('', views.main),
     path('register', views.register),               # show reg form
     path('do_register', views.do_register),         # send reg information

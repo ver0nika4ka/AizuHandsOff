@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block register %}
+    <h3>Please input the following information to register:</h3>
+    <form action='do_register' method="POST">
+        {% csrf_token %}
+        <!-- .as_p means to present fields as paragraphs-->
+        {{ register_form.as_p }}
+        <input type=submit value="Register">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<htm>
+    <head>
+        <title>Aizu HandsOff</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body>
+        <div class="page-header">
+            <h1><a href="/">Welcome to Aizu HandsOff website!</a></h1>
+        </div>
+        <div class="content container">
+            <div>
+                <h3>{{ sub_header }}</h3>
+            </div>
+            {% block register %}
+            {% endblock %}
+
+            {% block items_list %}
+            {% endblock %}
+
+        </div>
+    </body>
+</htm>
