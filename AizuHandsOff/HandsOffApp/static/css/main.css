@@ -29,3 +29,8 @@ h1, h2, h3, h4 {
 .row {
     font-size: large;
 }
+
+.logout-link, .login-link {
+    float: right;
+    padding-right: 30px;
+}

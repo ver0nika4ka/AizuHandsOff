@@ -10,8 +10,11 @@ from HandsOffApp.forms import RegisterForm, LoginForm, AddItemForm
 # Create your views here.
 def main(request):
     all_items = Item.objects.all()
+    # Check if the user is logged in
+    is_authorized = True if request.session.get('authorized_user_email') else False
     message = 'All available items:'
-    dictionary = {'items_list': all_items, 'sub_header': message}
+    dictionary = {'items_list': all_items, 'sub_header': message,
+                  'is_authorized': is_authorized}
     return render(request, 'items_list.html', dictionary)
 
 
@@ -73,7 +76,7 @@ def do_login(request):
     return redirect('my_items')
 
 
-def do_logout(request):
+def logout(request):
     request.session['authorized_user_email'] = None
     return redirect('view-main')
 

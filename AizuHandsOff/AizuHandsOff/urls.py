@@ -26,7 +26,7 @@ urlpatterns = [
     path('do_register', views.do_register),         # send reg information
     path('login', views.login, name='login'),
     path('do_login', views.do_login),
-    path('do_logout', views.do_logout),
+    path('logout', views.logout),
     path('add_item', views.add_item),
     path('do_add_item', views.do_add_item),
     path('remove_item', views.remove_item),

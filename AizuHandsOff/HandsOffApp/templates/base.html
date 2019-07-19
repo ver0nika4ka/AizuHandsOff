@@ -12,6 +12,16 @@
         <div class="page-header">
             <h1><a href="/">Welcome to Aizu HandsOff website!</a></h1>
         </div>
+        {% if is_authorized is True%}
+            <div class="logout-link">
+                <a href="logout">Logout</a>
+            </div>
+        {% elif is_authorized is False %}
+            <div class="login-link">
+                <a href="login">Login</a>
+            </div>
+        {% endif %}
+
         <div class="content container">
             <div>
                 <h3>{{ sub_header }}</h3>
