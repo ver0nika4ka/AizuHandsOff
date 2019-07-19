@@ -5,7 +5,7 @@ class Owner(models.Model):
 	name = models.CharField(max_length=64)
 	email = models.EmailField()
 	# Hashed password 
-	password = models.CharField(max_length=64)
+	password = models.CharField(max_length=128)
 	contact_info = models.CharField(max_length=256)
 
 	def __str__(self):
