@@ -10,6 +10,11 @@ class RegisterForm(forms.Form):
     contact_info = forms.CharField(label='Your contact information', max_length=256)
 
 
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(label='Password', max_length=20, widget=forms.PasswordInput)
+
+
 class AddItemForm(forms.Form):
     name = forms.CharField(label='Item Name', max_length=64)
     description = forms.CharField(label='Item Description', max_length=512)

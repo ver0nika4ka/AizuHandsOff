@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.main),
     path('register', views.register),               # show reg form
     path('do_register', views.do_register),         # send reg information
+    path('login', views.login, name='login'),
     path('do_login', views.do_login),
     path('do_logout', views.do_logout),
     path('add_new_item', views.add_new_item),

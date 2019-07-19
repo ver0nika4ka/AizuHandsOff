@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 import datetime
 from HandsOffApp.models import Owner, Category, Item
-from forms import RegisterForm
+from HandsOffApp.forms import RegisterForm, LoginForm, AddItemForm
 
 
 # Create your views here.
@@ -41,18 +41,36 @@ def do_register(request):
     return redirect('view-main')
 
 
+def login(request):
+    return render(request, 'login.html', {'login_form': LoginForm()})
+
 
 def do_login(request):
-    return HttpResponse('do_login')
+    # Create form with data from the request(email and password)
+    form = LoginForm(request.POST)
 
+    try:
+        if not form.is_valid():
+            raise RuntimeError("Error: " + str(form.errors))
+        values = form.cleaned_data
 
-def do_logout(request):
-    return HttpResponse('do_logout')
+        # Receiving the list of users from database
+        result = Owner.objects.filter(email=values['email'])
+        if not result:
+            # User with such email does not exist
+            raise RuntimeError('Wrong email or password. Please try again.')
 
+        user = result.get()
 
-def add_new_item(request):
-    return HttpResponse('add_new_item')
+        if not check_password(values['password'], user.password):
+            raise RuntimeError('Wrong email or password. Please try again.')
+        # Create key-value in dictionary session
+        # key "authorized_user_login" and value user email
+        request.session['authorized_user_email'] = user.email
+    except RuntimeError as e:
+        return HttpResponse(str(e) + '<p><a href=login>Go back to login</a></p>')
 
+    return redirect('my_items')
 
 def do_add_new_item(request):
     return HttpResponse('do_add_new_item')
