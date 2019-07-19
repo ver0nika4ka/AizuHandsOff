@@ -116,15 +116,14 @@ def do_remove_item(request):
 
 
 def added_items(request):
-    # Hardcode user email for now
-    user_email = "veranika.aizu@gmail.com"
-    # Получим юзера, чей email совпадает со строкой выше
+    # Receiving user email from session 'authorized_user_email'
+    user_email = request.session['authorized_user_email']
+    # Get a user whose email matches with a line above
     user = Owner.objects.filter(email=user_email).get()
-    # Получим список items у которых owner - юзер полученный выше
+    # Get the list of items where owner - a user from line above
     user_items = Item.objects.filter(owner=user)
+    message = 'Your list of added items:'
+    dictionary = {'items_list': user_items, 'sub_header': message}
+    return render(request, 'items_list.html', dictionary)
 
-    response = "<h2>Your list of added items:</h2>"
-    for item in user_items:
-        response += "{}<br>".format(item.name)
 
-    return HttpResponse(response)

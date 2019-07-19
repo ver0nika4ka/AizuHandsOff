@@ -31,5 +31,5 @@ urlpatterns = [
     path('do_add_item', views.do_add_item),
     path('remove_item', views.remove_item),
     path('do_remove_item', views.do_remove_item),
-    path('added_items', views.added_items),
+    path('added_items', views.added_items, name='my_items'),
     ]
