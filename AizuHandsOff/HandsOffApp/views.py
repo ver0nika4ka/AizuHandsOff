@@ -72,8 +72,39 @@ def do_login(request):
 
     return redirect('my_items')
 
-def do_add_new_item(request):
-    return HttpResponse('do_add_new_item')
+
+def do_logout(request):
+    request.session['authorized_user_email'] = None
+    return redirect('view-main')
+
+
+def add_item(request):
+    # if request.session['authorized_user_login'] == None:
+    if not request.session.get('authorized_user_email'):
+        return redirect('login')
+    # Get category names
+    category_names = [c.name for c in Category.objects.all()]
+    form = AddItemForm(category_names=category_names)
+    return render(request, 'add_item.html', {'add_item_form': form})
+
+
+def do_add_item(request):
+    # Pre-filled form with data what we got from add_item
+    category_names = [c.name for c in Category.objects.all()]
+    form = AddItemForm(request.POST, category_names=category_names)
+    if not form.is_valid():
+        raise RuntimeError('Error: ' + str(form.errors))
+    values = form.cleaned_data
+    user_email = request.session['authorized_user_email']
+    # Get a user whose email matches with a line above
+    user = Owner.objects.filter(email=user_email).get()
+    # Get category name from database
+    c = Category.objects.filter(name=values['category']).get()
+    Item.objects.create(owner=user, category=c,
+                        name=values['name'], description=values['description'],
+                        available_date=values['available_date'], price=values['price'])
+
+    return redirect('my_items')
 
 
 def remove_item(request):

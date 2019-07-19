@@ -16,7 +16,15 @@ class LoginForm(forms.Form):
 
 
 class AddItemForm(forms.Form):
+    category = forms.ChoiceField(label='Category')
     name = forms.CharField(label='Item Name', max_length=64)
     description = forms.CharField(label='Item Description', max_length=512)
     available_date = forms.DateField(label='Item available from')
     price = forms.CharField(label='Input price or write Free', max_length=64)
+
+    def __init__(self, *args, **kwargs):
+        categories = kwargs.pop('category_names')
+        super().__init__(*args, **kwargs)
+        self.fields['category'].choices = zip(categories, categories)
+
+
