@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -108,6 +108,11 @@ def do_add_item(request):
                         available_date=values['available_date'], price=values['price'])
 
     return redirect('my_items')
+
+
+def item_detail(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    return render(request, 'item_detail.html', {'item': item})
 
 
 def remove_item(request):

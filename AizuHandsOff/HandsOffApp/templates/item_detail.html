@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block item_detail %}
+    <table class="table" style="width: 50%">
+        <tr>
+            <th>Item name</th>
+            <td> {{ item.name }} </td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td> {{ item.category.name }} </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td> {{ item.description }} </td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td> {{ item.price }} </td>
+        </tr>
+        <tr>
+            <th>Available date</th>
+            <td> {{ item.available_date }} </td>
+        </tr>
+        <tr>
+            <th>Posted by</th>
+            <td> {{ item.owner.name }} </td>
+        </tr>
+        <tr>
+            <th>Contact Information</th>
+            <td> {{ item.owner.contact_info }} </td>
+        </tr>
+    </table>
+
+{% endblock %}

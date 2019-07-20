@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block items_list %}
-    <table style="width:60%">
+    <table class="table">
         <tr>
             <th>Item name</th>
             <th>Category</th>
@@ -10,7 +10,8 @@
         </tr>
         {% for item in items_list %}
             <tr>
-                <td>{{ item.name }}</td>
+                <!-- Generate link based on primary key -->
+                <td><a href="{% url 'item_detail' pk=item.pk %}">{{ item.name }}</a></td>
                 <td>{{ item.category.name }}</td>
                 <td>{{ item.price }}</td>
                 <td>{{ item.available_date }}</td>
