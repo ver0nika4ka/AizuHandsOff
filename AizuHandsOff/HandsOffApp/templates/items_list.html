@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 
 {% block items_list %}
-    {% for item in items_list %}
-        <div class="row">
-            {{ item }}
-        </div>
-    {% endfor %}
+    <table style="width:60%">
+        <tr>
+            <th>Item name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Available date</th>
+        </tr>
+        {% for item in items_list %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.category.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.available_date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
