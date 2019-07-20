@@ -112,20 +112,29 @@ def item_detail(request, pk):
 
 
 def edit_item(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-
-    # if request.session['authorized_user_login'] == None:
-    if not request.session.get('authorized_user_email'):
+    # Check if the authorized user has the element
+    user_email = request.session.get('authorized_user_email')
+    if not user_email:
         return redirect('login')
+    user = Owner.objects.filter(email=user_email).get()
+    item = get_object_or_404(Item, pk=pk, owner=user)
 
-    # TODO check if the authorized user has the element
-
-    # Create and pre-fill form based on item
-    form = ItemForm(instance=item)
+    if request.method == "POST":
+        form = ItemForm(request.POST, instance=item)
+        if not form.is_valid():
+            raise RuntimeError('Error: ' + str(form.errors))
+        form.save()
+        # TODO: Check if required to set owner again
+        return redirect('item_detail', pk=item.pk)
+    else:
+        # Create and pre-fill form based on item
+        form = ItemForm(instance=item)
     return render(request, 'edit_item.html', {'edit_item_form': form})
 
 
 def do_edit_item(request):
+
+
     return redirect('my_items')
 
 

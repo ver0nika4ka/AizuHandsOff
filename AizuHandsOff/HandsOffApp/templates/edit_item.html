@@ -2,7 +2,7 @@
 
 {% block edit_item %}
 <h3>Please review and update your item here:</h3>
-    <form action='/do_edit_item' method="POST">
+    <form method="POST">
         {% csrf_token %}
         {{ edit_item_form.as_p }}
         <input type=submit value="Update">
