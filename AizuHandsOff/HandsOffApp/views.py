@@ -108,7 +108,14 @@ def do_add_item(request):
 
 def item_detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    return render(request, 'item_detail.html', {'item': item})
+    dictionary = {'item': item}
+    # Check if the user is logged in
+    user_email = request.session.get('authorized_user_email')
+    # and if item belongs to owner
+    if user_email and item.owner.email == user_email:
+        dictionary['is_authorized'] = True
+
+    return render(request, 'item_detail.html', dictionary)
 
 
 def edit_item(request, pk):

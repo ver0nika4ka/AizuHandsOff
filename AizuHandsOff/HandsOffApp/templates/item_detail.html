@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block item_detail %}
-    <!-- Added button to edit item -->
-    <a class="btn btn-default" href="{% url 'edit_item' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    {% if is_authorized %}
+            <!-- Added button to edit item if user is authorized -->
+        <a class="btn btn-default" href="{% url 'edit_item' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    {% endif %}
     <table class="table" style="width: 50%">
         <tr>
             <th>Item name</th>
