@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 import datetime
 from HandsOffApp.models import Owner, Category, Item
-from HandsOffApp.forms import RegisterForm, LoginForm, AddItemForm
+from HandsOffApp.forms import RegisterForm, LoginForm, ItemForm
 
 
 # Create your views here.
@@ -85,27 +85,23 @@ def add_item(request):
     # if request.session['authorized_user_login'] == None:
     if not request.session.get('authorized_user_email'):
         return redirect('login')
-    # Get category names
-    category_names = [c.name for c in Category.objects.all()]
-    form = AddItemForm(category_names=category_names)
+    form = ItemForm()
     return render(request, 'add_item.html', {'add_item_form': form})
 
 
 def do_add_item(request):
-    # Pre-filled form with data what we got from add_item
-    category_names = [c.name for c in Category.objects.all()]
-    form = AddItemForm(request.POST, category_names=category_names)
+    # Pre-fill form with data what we got from add_item
+    form = ItemForm(request.POST)
     if not form.is_valid():
         raise RuntimeError('Error: ' + str(form.errors))
-    values = form.cleaned_data
+    item = form.save(commit=False)
+
     user_email = request.session['authorized_user_email']
     # Get a user whose email matches with a line above
     user = Owner.objects.filter(email=user_email).get()
-    # Get category name from database
-    c = Category.objects.filter(name=values['category']).get()
-    Item.objects.create(owner=user, category=c,
-                        name=values['name'], description=values['description'],
-                        available_date=values['available_date'], price=values['price'])
+    item.owner = user
+    # Save Item to the database
+    item.save()
 
     return redirect('my_items')
 
@@ -113,6 +109,24 @@ def do_add_item(request):
 def item_detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     return render(request, 'item_detail.html', {'item': item})
+
+
+def edit_item(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    # if request.session['authorized_user_login'] == None:
+    if not request.session.get('authorized_user_email'):
+        return redirect('login')
+
+    # TODO check if the authorized user has the element
+
+    # Create and pre-fill form based on item
+    form = ItemForm(instance=item)
+    return render(request, 'edit_item.html', {'edit_item_form': form})
+
+
+def do_edit_item(request):
+    return redirect('my_items')
 
 
 def remove_item(request):

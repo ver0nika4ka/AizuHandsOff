@@ -1,4 +1,7 @@
 from django import forms
+# import ModelForm to map forms to Django models
+from django.forms import ModelForm
+from HandsOffApp.models import Item
 
 
 class RegisterForm(forms.Form):
@@ -15,16 +18,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Password', max_length=20, widget=forms.PasswordInput)
 
 
-class AddItemForm(forms.Form):
-    category = forms.ChoiceField(label='Category')
-    name = forms.CharField(label='Item Name', max_length=64)
-    description = forms.CharField(label='Item Description', max_length=512)
-    available_date = forms.DateField(label='Item available from')
-    price = forms.CharField(label='Input price or write Free', max_length=64)
-
-    def __init__(self, *args, **kwargs):
-        categories = kwargs.pop('category_names')
-        super().__init__(*args, **kwargs)
-        self.fields['category'].choices = zip(categories, categories)
-
-
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = ['category', 'name', 'description', 'available_date', 'price']

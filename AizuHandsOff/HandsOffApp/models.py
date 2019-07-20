@@ -29,3 +29,5 @@ class Item(models.Model):
 
 	def __str__(self):
 		return "'{}' in category {} posted by {}".format(self.name, self.category.name, self.owner.name)
+
+
