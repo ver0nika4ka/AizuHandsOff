@@ -139,18 +139,11 @@ def edit_item(request, pk):
     return render(request, 'edit_item.html', {'edit_item_form': form})
 
 
-def do_edit_item(request):
-
-
+def remove_item(request, pk):
+    # TODO: Check if the user authorized and it is his item
+    item = get_object_or_404(Item, pk=pk)
+    item.delete()
     return redirect('my_items')
-
-
-def remove_item(request):
-    return HttpResponse('remove_item')
-
-
-def do_remove_item(request):
-    return HttpResponse('do_remove_item')
 
 
 def added_items(request):

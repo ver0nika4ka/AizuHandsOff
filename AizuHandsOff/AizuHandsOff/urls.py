@@ -29,9 +29,8 @@ urlpatterns = [
     path('logout', views.logout),
     path('add_item', views.add_item),
     path('do_add_item', views.do_add_item),
-    path('remove_item', views.remove_item),
-    path('do_remove_item', views.do_remove_item),
     path('added_items', views.added_items, name='my_items'),
     path('items/<int:pk>/', views.item_detail, name='item_detail'),
     path('items/<int:pk>/edit/', views.edit_item, name='edit_item'),
+    path('items/<int:pk>/remove/', views.remove_item, name='remove_item'),
     ]
