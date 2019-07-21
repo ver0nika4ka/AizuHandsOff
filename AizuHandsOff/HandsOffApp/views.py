@@ -95,14 +95,9 @@ def do_add_item(request):
     if not form.is_valid():
         raise RuntimeError('Error: ' + str(form.errors))
     item = form.save(commit=False)
-
-    user_email = request.session['authorized_user_email']
-    # Get a user whose email matches with a line above
-    user = Owner.objects.filter(email=user_email).get()
-    item.owner = user
+    item.owner = get_user_or_show_login(request)
     # Save Item to the database
     item.save()
-
     return redirect('my_items')
 
 
@@ -119,11 +114,7 @@ def item_detail(request, pk):
 
 
 def edit_item(request, pk):
-    # Check if the authorized user has the element
-    user_email = request.session.get('authorized_user_email')
-    if not user_email:
-        return redirect('login')
-    user = Owner.objects.filter(email=user_email).get()
+    user = get_user_or_show_login(request)
     item = get_object_or_404(Item, pk=pk, owner=user)
 
     if request.method == "POST":
@@ -140,17 +131,16 @@ def edit_item(request, pk):
 
 
 def remove_item(request, pk):
-    # TODO: Check if the user authorized and it is his item
-    item = get_object_or_404(Item, pk=pk)
+    # Check if the user authorized and it is his item
+    user = get_user_or_show_login(request)
+    item = get_object_or_404(Item, pk=pk, owner=user)
     item.delete()
     return redirect('my_items')
 
 
 def added_items(request):
-    # Receiving user email from session 'authorized_user_email'
-    user_email = request.session['authorized_user_email']
-    # Get a user whose email matches with a line above
-    user = Owner.objects.filter(email=user_email).get()
+    # Check if the user authorized and it is his item
+    user = get_user_or_show_login(request)
     # Get the list of items where owner - a user from line above
     user_items = Item.objects.filter(owner=user)
     message = 'Your list of added items:'
@@ -158,3 +148,11 @@ def added_items(request):
     return render(request, 'items_list.html', dictionary)
 
 
+def get_user_or_show_login(request):
+    # Receiving user email from session 'authorized_user_email'
+    user_email = request.session.get('authorized_user_email')
+    if not user_email:
+        return redirect('login')
+    # Get a user whose email matches with a line above
+    user = Owner.objects.filter(email=user_email).get()
+    return user
