@@ -10,6 +10,7 @@
     </head>
     <body>
         <div class="page-header">
+            <a href="{% url 'add_item' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             <h1><a href="/">Welcome to Aizu HandsOff website!</a></h1>
         </div>
         {% if is_authorized is True %}

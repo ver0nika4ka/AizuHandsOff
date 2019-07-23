@@ -27,7 +27,7 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('do_login', views.do_login),
     path('logout', views.logout),
-    path('add_item', views.add_item),
+    path('add_item', views.add_item, name='add_item'),
     path('do_add_item', views.do_add_item),
     path('added_items', views.added_items, name='my_items'),
     path('items/<int:pk>/', views.item_detail, name='item_detail'),
