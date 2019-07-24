@@ -156,7 +156,10 @@ def show_by_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     # filter items by desired category
     items = Item.objects.filter(category=category)
-    message = "Items in category " + category.name
+    if items:
+        message = "Items in category " + category.name
+    else:
+        message = "There are no items in category " + category.name
     dictionary = {'items_list': items, 'sub_header': message, 'category_list': Category.objects.all() }
     return render(request, 'items_list.html', dictionary)
 
