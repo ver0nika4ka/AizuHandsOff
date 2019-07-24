@@ -5,9 +5,10 @@
         <div class="categories-list">
             <h3>Categories:</h3>
             <ul>
-                <li>All</li>
+                <li><a href="{% url 'view-main'%}">All</a></li>
             {% for category in category_list %}
-                <li>{{ category.name }}</li>
+                <!-- To add clickable link-->
+                <li> <a href="{% url 'by_category' pk=category.pk%}">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
         </div>
