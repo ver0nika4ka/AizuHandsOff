@@ -146,7 +146,8 @@ def added_items(request):
     user_items = Item.objects.filter(owner=user)
     category_list = Category.objects.all()
     message = 'Your list of added items:'
-    dictionary = {'items_list': user_items, 'sub_header': message, 'category_list': category_list}
+    dictionary = {'items_list': user_items, 'sub_header': message,
+                  'category_list': category_list, 'is_authorized': True}
     return render(request, 'items_list.html', dictionary)
 
 

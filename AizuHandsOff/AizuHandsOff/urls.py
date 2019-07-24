@@ -22,14 +22,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('main', views.main, name='view-main'),
     path('', views.main),
-    path('register', views.register),               # show reg form
-    path('do_register', views.do_register),         # send reg information
+    path('register', views.register, name='register'),               # show reg form
+    path('do_register', views.do_register),                          # send reg information
     path('login', views.login, name='login'),
     path('do_login', views.do_login),
-    path('logout', views.logout),
+    path('logout', views.logout, name='logout'),
     path('add_item', views.add_item, name='add_item'),
     path('do_add_item', views.do_add_item),
-    path('added_items', views.added_items, name='my_items'),
+    path('my-items', views.added_items, name='my_items'),
     path('items/<int:pk>/', views.item_detail, name='item_detail'),
     path('items/<int:pk>/edit/', views.edit_item, name='edit_item'),
     path('items/<int:pk>/remove/', views.remove_item, name='remove_item'),

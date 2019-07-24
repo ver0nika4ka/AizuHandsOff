@@ -11,7 +11,8 @@
     <body>
         <div class="page-header">
             <div class="welcome-header">
-                <h1><a href="/">Welcome to Aizu HandsOff website!</a></h1>
+                <!-- url construction generates link from view name in urls.py -->
+                <h1><a href= {% url "view-main" %}>Welcome to Aizu HandsOff website!</a></h1>
             </div>
             <div class="add-item">
                 <a href="{% url 'add_item' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Add Item</a>
@@ -19,12 +20,13 @@
         </div>
         {% if is_authorized is True %}
             <div class="logout-link">
-                <a href="logout">Logout</a>
+                <a href= {% url "my_items"%}>My Items</a> <br>
+                <a href= {% url "logout"%}>Logout</a>
             </div>
         {% elif is_authorized is False %}
             <div class="login-link">
-                <a href="login">Login</a> <br>
-                <a href="register">Register</a>
+                <a href={% url "login" %}>Login</a> <br>
+                <a href={% url "register"%}>Register</a>
             </div>
         {% endif %}
 
