@@ -40,4 +40,15 @@ h1, h2, h3, h4 {
     float: right;
     font-size: 26pt;
     margin-right: 20px;
+}.categories-items-container {
+	display:flex;
+}
+
+.categories-list {
+	width: 200px;
+}
+
+.items-list {
+	/* Fill the rest of the page (of the parent's width) */
+	flex-grow: 1;
 }

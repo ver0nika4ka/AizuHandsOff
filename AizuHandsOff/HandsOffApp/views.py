@@ -10,11 +10,12 @@ from HandsOffApp.forms import RegisterForm, LoginForm, ItemForm
 # Create your views here.
 def main(request):
     all_items = Item.objects.all()
+    category_list = Category.objects.all()
     # Check if the user is logged in
     is_authorized = True if request.session.get('authorized_user_email') else False
     message = 'All available items:'
     dictionary = {'items_list': all_items, 'sub_header': message,
-                  'is_authorized': is_authorized}
+                  'is_authorized': is_authorized, 'category_list': category_list}
     return render(request, 'items_list.html', dictionary)
 
 
@@ -143,8 +144,9 @@ def added_items(request):
     user = get_user_or_show_login(request)
     # Get the list of items where owner - a user from line above
     user_items = Item.objects.filter(owner=user)
+    category_list = Category.objects.all()
     message = 'Your list of added items:'
-    dictionary = {'items_list': user_items, 'sub_header': message}
+    dictionary = {'items_list': user_items, 'sub_header': message, 'category_list': category_list}
     return render(request, 'items_list.html', dictionary)
 
 

@@ -1,21 +1,37 @@
 {% extends 'base.html' %}
 
 {% block items_list %}
-    <table class="table">
-        <tr>
-            <th>Item name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Available date</th>
-        </tr>
-        {% for item in items_list %}
-            <tr>
-                <!-- Generate link based on primary key -->
-                <td><a href="{% url 'item_detail' pk=item.pk %}">{{ item.name }}</a></td>
-                <td>{{ item.category.name }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.available_date }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="categories-items-container">
+        <div class="categories-list">
+            <h3>Categories:</h3>
+            <ul>
+                <li>All</li>
+            {% for category in category_list %}
+                <li>{{ category.name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="items-list">
+            <div class="sub-header">
+                <h3>{{ sub_header }}</h3>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Item name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Available date</th>
+                </tr>
+                {% for item in items_list %}
+                    <tr>
+                        <!-- Generate link based on primary key -->
+                        <td><a href="{% url 'item_detail' pk=item.pk %}">{{ item.name }}</a></td>
+                        <td>{{ item.category.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.available_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock %}
