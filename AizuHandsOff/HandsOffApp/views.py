@@ -150,6 +150,16 @@ def added_items(request):
     return render(request, 'items_list.html', dictionary)
 
 
+def show_by_category(request, pk):
+    # Get the category by pk (primary key)
+    category = get_object_or_404(Category, pk=pk)
+    # filter items by desired category
+    items = Item.objects.filter(category=category)
+    message = "Items in category " + category.name
+    dictionary = {'items_list': items, 'sub_header': message, 'category_list': Category.objects.all() }
+    return render(request, 'items_list.html', dictionary)
+
+
 def get_user_or_show_login(request):
     # Receiving user email from session 'authorized_user_email'
     user_email = request.session.get('authorized_user_email')

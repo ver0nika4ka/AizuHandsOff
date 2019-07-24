@@ -33,4 +33,5 @@ urlpatterns = [
     path('items/<int:pk>/', views.item_detail, name='item_detail'),
     path('items/<int:pk>/edit/', views.edit_item, name='edit_item'),
     path('items/<int:pk>/remove/', views.remove_item, name='remove_item'),
+    path('categories/<int:pk>/', views.show_by_category, name='items_in_category'),
     ]
