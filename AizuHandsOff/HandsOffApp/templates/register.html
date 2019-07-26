@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block register %}
-    <h3>Please input the following information to register:</h3>
+    <h3 class="register-header">Please input the following information to register:</h3>
     <form action='do_register' method="POST">
         {% csrf_token %}
-        <!-- .as_p means to present fields as paragraphs-->
-        {{ register_form.as_p }}
+        {% for field in register_form %}
+            {% bootstrap_field field layout='horizontal'%}
+        {% endfor %}
         <input type=submit value="Register">
     </form>
-
 {% endblock %}

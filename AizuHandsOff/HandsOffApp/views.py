@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 
-import datetime
 from HandsOffApp.models import Owner, Category, Item
 from HandsOffApp.forms import RegisterForm, LoginForm, ItemForm
 

@@ -2,6 +2,7 @@ from django import forms
 # import ModelForm to map forms to Django models
 from django.forms import ModelForm
 from HandsOffApp.models import Item
+from bootstrap_datepicker_plus import DatePickerInput
 
 
 class RegisterForm(forms.Form):
@@ -22,4 +23,6 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ['category', 'name', 'description', 'available_date', 'price']
+        # datepicker_params = {'format': 'YYYY/MM/DD'}
+        widgets = {'available_date': DatePickerInput()}  # options=datepicker_params)}
 

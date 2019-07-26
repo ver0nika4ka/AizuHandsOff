@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block add_item %}
 <h3>Please add new item here:</h3>
     <form action='do_add_item' method="POST">
         {% csrf_token %}
-        {{ add_item_form.as_p }}
+        {% for field in add_item_form %}
+            {% bootstrap_field field layout='horizontal'%}
+        {% endfor %}
         <input type=submit value="Add">
     </form>
 
