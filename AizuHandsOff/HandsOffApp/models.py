@@ -6,7 +6,7 @@ class Owner(models.Model):
 	email = models.EmailField()
 	# Hashed password 
 	password = models.CharField(max_length=128)
-	contact_info = models.CharField(max_length=256)
+	contact_info = models.TextField(max_length=256)
 
 	def __str__(self):
 		return self.name
@@ -23,7 +23,7 @@ class Item(models.Model):
 	owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
 	category = models.ForeignKey(Category, on_delete=models.PROTECT)
 	name = models.CharField(max_length=64)
-	description = models.CharField(max_length=512)
+	description = models.TextField(max_length=512)
 	available_date = models.DateField()
 	price = models.CharField(max_length=64)
 
