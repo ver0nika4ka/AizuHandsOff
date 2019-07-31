@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
     'HandsOffApp',
+    'django_ajax'
 ]
 
 MIDDLEWARE = [
