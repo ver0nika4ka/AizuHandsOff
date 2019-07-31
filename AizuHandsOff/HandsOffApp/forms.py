@@ -3,7 +3,9 @@ from django import forms
 from django.forms import ModelForm
 from HandsOffApp.models import Item
 from bootstrap_datepicker_plus import DatePickerInput
+import datetime
 
+ADVANCE_AVAILABILITY_DAYS = 90
 
 class RegisterForm(forms.Form):
     name = forms.CharField(label='Name', max_length=64)
@@ -23,6 +25,12 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ['category', 'name', 'description', 'available_date', 'price']
-        # datepicker_params = {'format': 'YYYY/MM/DD'}
-        widgets = {'available_date': DatePickerInput()}  # options=datepicker_params)}
+
+        # TODO: Maybe, make date format as 'YYYY/MM/DD'
+        datepicker_params = {
+            'minDate': datetime.date.today().strftime('%m/%d/%Y'),
+            'maxDate': (datetime.date.today() + datetime.timedelta(days=ADVANCE_AVAILABILITY_DAYS)).strftime('%m/%d/%Y'),
+            'showTodayButton': True
+        }
+        widgets = {'available_date': DatePickerInput(options=datepicker_params)}
 
