@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block edit_item %}
 <h3>Please review and update your item here:</h3>
     <form method="POST">
         {% csrf_token %}
-        {{ edit_item_form.as_p }}
+        {% for field in edit_item_form %}
+            {% bootstrap_field field layout='horizontal'%}
+        {% endfor %}
         <input type=submit value="Update">
     </form>
 

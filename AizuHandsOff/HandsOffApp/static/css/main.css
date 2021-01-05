@@ -75,3 +75,6 @@ h1, h2, h3, h4 {
 	/* Fill the rest of the page (of the parent's width) */
 	flex-grow: 1;
 }
+.form-s-size{
+	width: 35%;
+}

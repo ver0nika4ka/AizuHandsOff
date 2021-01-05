@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
+{% load bootstrap4  %}
 
 {% block login %}
     <h3>Please input your login and password:</h3>
-    <form action='do_login' method="POST">
-        {% csrf_token %}
-        <!-- .as_p means to present fields as paragraphs-->
-        {{ login_form.as_p }}
-        <input type=submit value="Login">
-    </form>
+    <div class="form-s-size">
+        <form action='do_login' method="POST">
+            {% csrf_token %}
+            {% for field in login_form %}
+                {% bootstrap_field field layout='horizontal'%}
+            {% endfor %}
+            <input type=submit value="Login">
+        </form>
+    </div>
 
 {% endblock %}
