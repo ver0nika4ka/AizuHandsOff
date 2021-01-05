@@ -34,4 +34,5 @@ urlpatterns = [
     path('items/<int:pk>/edit/', views.edit_item, name='edit_item'),
     path('items/<int:pk>/remove/', views.remove_item, name='remove_item'),
     path('categories/<int:pk>/', views.show_by_category, name='by_category'),
+    path('show_by_category_ajax', views.show_by_category_ajax, name='show_by_category_ajax')
     ]

@@ -8,15 +8,15 @@
                 <li><a href="{% url 'view-main'%}">All</a></li>
             {% for category in category_list %}
                 <!-- To add clickable link-->
-                <li> <a href="{% url 'by_category' pk=category.pk%}">{{ category.name }}</a></li>
+                <li> <a href="#" onclick="getItemsByCategory({{ category.pk }});">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
         </div>
         <div class="items-list">
             <div class="sub-header">
-                <h3>{{ sub_header }}</h3>
+                <h3 id="sub_header_message">{{ sub_header }}</h3>
             </div>
-            <table class="table">
+            <table class="table" id="items_table">
                 <tr>
                     <th>Item name</th>
                     <th>Category</th>

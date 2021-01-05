@@ -164,6 +164,23 @@ def show_by_category(request, pk):
     return render(request, 'items_list.html', dictionary)
 
 
+@ajax
+def show_by_category_ajax(request):
+    if request.method != "POST":
+        return redirect('view-main')
+    pk = request.POST.get('category_id')
+    # Get the category by pk (primary key)
+    category = get_object_or_404(Category, pk=pk)
+    # filter items by desired category
+    items = Item.objects.filter(category=category).values()
+    if items:
+        message = "Items in category " + category.name
+    else:
+        message = "There are no items in category " + category.name
+    dictionary = {'items_list': items, 'sub_header': message}
+    return dictionary
+
+
 def get_user_or_show_login(request):
     # Receiving user email from session 'authorized_user_email'
     user_email = request.session.get('authorized_user_email')

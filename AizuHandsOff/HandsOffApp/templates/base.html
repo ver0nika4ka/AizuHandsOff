@@ -9,6 +9,33 @@
         <title>Aizu HandsOff</title>
 		<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/yceruto/django-ajax@2.3.7/django_ajax/static/django_ajax/js/jquery.ajax.min.js"></script>
+        <script type="text/javascript">
+            function getItemsByCategory(category_id)
+            {
+                ajaxPost("{% url 'show_by_category_ajax' %}", { 'category_id': category_id },
+                    function(result) {
+                        let resultingHtml = `
+                                <tr>
+                                    <th>Item name</th>
+                                    <th>Price</th>
+                                    <th>Available date</th>
+                                </tr>`;
+                        for(let i = 0; i < result.items_list.length; i++) {
+                            let item = result.items_list[i];
+                            resultingHtml += `
+                                <tr>
+                                    <td><a href="/items/` + item.pk + `">` + item.name + `</a></td>
+                                    <td>` + item.price + `</td>
+                                    <td>` + item.available_date + `</td>
+                                </tr>
+                            `;
+                        }
+                        document.getElementById("items_table").innerHTML = resultingHtml;
+                        document.getElementById("sub_header_message").innerHTML = result.sub_header;
+                    });
+                }
+        </script>
     </head>
     <body>
         <div class="page-header">
