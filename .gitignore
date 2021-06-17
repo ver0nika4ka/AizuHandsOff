@@ -1,7 +1,6 @@
 *.pyc
 *~
 __pycache__
-seia
 db.sqlite3
 /static
 .DS_Store
